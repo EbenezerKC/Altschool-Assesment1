@@ -38,6 +38,7 @@ Then run vagrant up to start the machine
 Connect the Virtual machine by runing vagrant ssh
 
 Now that you have logged into your "masters" virtual machine, follow the same procedure for the "slave" virtual machine.
+![master1](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/82792f04-deed-41da-85aa-216f8318bab5)
 
 NOTE: Every other thing is the same for the procedure except for the configuration in the vagrant file which should be under Vagrant.configure("2") do |config|.Use the command below under the Vagrant.configure("2") do |config|.
 
@@ -64,12 +65,21 @@ Change the directory to .ssh with the command cd .ssh just as we did in the "mas
 
 Then run the command cat public >> authorized_keys to copy the public keys into the authorized_keys file from the file named public in the "slave" machine. Run the command cat authorized_keys to see the content of the copied public keys of the "masters" virtual machine and the "slave" virtual machine.
 
+![master keys ipp add](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/8900ccea-1ab4-4b22-801b-b1d1f35681b2)
+
+
 Connect the "master" virtual machine to the "slave" virtual machine by using ssh to connect the IP address of the "slave" machine to the "master" machine. First of all, run the command ip a to know the IP addresses in each machine. Then run the command ssh vagrant@slave ip in the "master" virtual machine. It should look like this ssh vagrant@192.168.33.8 Make sure to replace the IP address with your own "slave" IP address. Whatever it prompts you, type 'yes'. From the screenshot, you can see that we can connect to our "slave" machine from the "master" machine.
+
+![provision master and slave](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/a67b638a-5007-4300-9562-37d067b3d27a)
+
 
 Creating the Bash Script and Ansible to automate the provisioning of the two Ubuntu-based Virtual Machines we've created.
 In your "master" virtual machine, create your script that will automate the deployment of LAMP (Linux, Apache, MySQL, PHP) stack.
 
 Name your script anything of your choice with the .sh extension. I will be naming mine LAMP.sh. Use the command touch LAMP.sh to create your script. run ls to see if the script file you ran is showing.
+
+![LAMP1](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/60d4a279-040c-43a2-956b-cea0cbc85f7d)
+
 
 Run nano LAMP.sh to open the file script and write your script. Please copy and paste this script inside it. Each line of the command has a comment with a brief explanation with a '#' symbol in front of it. I made sure to pick each line of commands one by one to run before compiling it into a full script below.
 
@@ -257,6 +267,8 @@ ansible all -m ping -i inventory
 Change the directory back to Ansible with the command cd Ansible. Then open the playbook with the command nano playbook.yml. Paste the command below inside your playbook but change the IP address to your "slave" machine IP. Press 'crtl+O' to save, press 'enter', and then 'crtl+X' to exit the playbook.
 
 
+![playbook](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/a01f66e8-42ca-44b8-add3-3a7f2e551fc3)
+
 
 ---
 
@@ -334,3 +346,5 @@ Run the command below to execute the playbook:
 
 
 ansible-playbook playbook.yml -i inventory
+
+![Screenshot 2024](https://github.com/EbenezerKC/Altschool-Project/assets/153145361/eabddba8-8de6-4058-afbe-6898124d251e)
